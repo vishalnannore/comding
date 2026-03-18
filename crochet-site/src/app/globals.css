@@ -1,0 +1,80 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Brutalist Good Fella Architecture */
+    --background: 260 64% 7%;  /* Deep space purple/charcoal */
+    --foreground: 240 5% 96%;  /* Sharp off-white */
+
+    --card: 260 64% 7%;
+    --card-foreground: 240 5% 96%;
+
+    --popover: 260 64% 7%;
+    --popover-foreground: 240 5% 96%;
+
+    --primary: 15 100% 64%; /* Vibrant Orange/Coral */
+    --primary-foreground: 260 64% 7%;
+
+    --secondary: 260 20% 15%; /* Charcoal Accent */
+    --secondary-foreground: 240 5% 96%;
+
+    --muted: 260 20% 12%;
+    --muted-foreground: 240 5% 65%;
+
+    --accent: 15 100% 64%;
+    --accent-foreground: 260 64% 7%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 240 5% 96%;
+
+    --border: 260 20% 15%;
+    --input: 260 20% 15%;
+    --ring: 15 100% 64%;
+
+    --radius: 0rem; /* Stark brutalist geometry */
+  }
+}
+
+@layer base {
+  * {
+    border-color: hsl(var(--border));
+  }
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+  ::selection {
+    background-color: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+  }
+  h1, h2, h3, h4, h5, h6 {
+    /* Extreme tight tracking for that modern feel */
+    letter-spacing: -0.05em;
+  }
+}
+
+@layer utilities {
+  .hover-bouncy {
+    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+    transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+    transition-duration: 500ms;
+  }
+  .hover-bouncy:hover {
+    background-color: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+  }
+  .hover-brutalist {
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+    transition-duration: 500ms;
+  }
+  .hover-brutalist:hover {
+    background-color: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+  }
+}
