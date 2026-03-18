@@ -1,28 +1,39 @@
+/* eslint-disable @next/next/no-img-element */
 'use client';
 
 import { Package, Plus, ListOrdered, Save, X, Trash2 } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { createClient } from '@/lib/supabase/client';
 
+export interface DatabaseProduct {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  stock: number;
+  image_url: string;
+  created_at?: string;
+}
+
 export default function AdminDashboard() {
-  const [products, setProducts] = useState<any[]>([]);
+  const [products, setProducts] = useState<DatabaseProduct[]>([]);
   const [editingId, setEditingId] = useState<string | null>(null);
-  const [editForm, setEditForm] = useState<any>({});
+  const [editForm, setEditForm] = useState<Partial<DatabaseProduct>>({});
   const [isLoading, setIsLoading] = useState(true);
   
   const supabase = createClient();
 
-  useEffect(() => {
-    fetchProducts();
-  }, []);
-
-  const fetchProducts = async () => {
+  const fetchProducts = useCallback(async () => {
     const { data } = await supabase.from('products').select('*').order('created_at', { ascending: false });
     if (data) setProducts(data);
     setIsLoading(false);
-  };
+  }, [supabase]);
 
-  const handleEditClick = (p: any) => {
+  useEffect(() => {
+    fetchProducts();
+  }, [fetchProducts]);
+
+  const handleEditClick = (p: DatabaseProduct) => {
     setEditingId(p.id);
     setEditForm(p);
   };
@@ -32,11 +43,15 @@ export default function AdminDashboard() {
     setIsLoading(true);
     
     if (editingId.startsWith('new_')) {
-      const { id, created_at, ...insertData } = editForm;
+      const insertData = { ...editForm };
+      delete insertData.id;
+      delete insertData.created_at;
       const { error } = await supabase.from('products').insert([insertData]);
       if (error) alert('FAILED TO INITIALIZE OBJECT: ' + error.message);
     } else {
-      const { id, created_at, ...updateData } = editForm;
+      const updateData = { ...editForm };
+      delete updateData.id;
+      delete updateData.created_at;
       const { error } = await supabase.from('products').update(updateData).eq('id', editingId);
       if (error) alert('FAILED TO OVERRIDE: ' + error.message);
     }
