@@ -167,7 +167,7 @@ export default function AdminDashboard() {
                           <div className="cursor-none">
                             <p className="font-black text-xl uppercase tracking-tight cursor-none">{p.name}</p>
                             <p className="text-muted-foreground font-mono text-xs uppercase tracking-widest mt-2 cursor-none">
-                              ${Number(p.price).toFixed(2)} // SEC: <span className={p.stock > 0 ? "text-primary" : "text-destructive"}>{p.stock}</span>
+                              ${Number(p.price).toFixed(2)} {'//'} SEC: <span className={p.stock > 0 ? "text-primary" : "text-destructive"}>{p.stock}</span>
                             </p>
                           </div>
                         )}

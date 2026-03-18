@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import { useEffect, useRef } from 'react';
@@ -6,6 +7,7 @@ export function HeroScene() {
   const canvasRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const canvas = canvasRef.current;
     const scriptId = 'tubes-cursor-script';
     let app: any = null;
 
@@ -48,8 +50,8 @@ export function HeroScene() {
     return () => {
       clearInterval(checkInit);
       document.body.removeEventListener('click', handleClick);
-      if (canvasRef.current) {
-        canvasRef.current.innerHTML = '';
+      if (canvas) {
+        canvas.innerHTML = '';
       }
     };
   }, []);

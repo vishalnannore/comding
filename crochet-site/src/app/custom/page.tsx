@@ -1,7 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
-import gsap from 'gsap';
+import { useState, useRef } from 'react';
 import { SplitText } from '@/components/ui/SplitText';
 import { createClient } from '@/lib/supabase/client';
 
