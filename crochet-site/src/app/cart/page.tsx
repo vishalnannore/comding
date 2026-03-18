@@ -24,6 +24,14 @@ export default function CartPage() {
       
       if (data.error) throw new Error(data.error);
 
+      // Bypass Razorpay completely if the server is running without keys
+      if (data.orderId.startsWith('mock_order_')) {
+        alert('SYSTEM WARNING: RAZORPAY KEYS NOT DETECTED IN ENVIRONMENT.\nPROCEEDING WITH MOCK TRANSACTION.\n\nTRANSACTION ACKNOWLEDGED. ID: ' + data.orderId + '\nTOTAL: $' + data.verifiedTotal.toFixed(2));
+        clearCart();
+        setIsCheckingOut(false);
+        return;
+      }
+
       // Dynamically load Razorpay SDK
       const loadScript = () => new Promise((resolve) => {
         const script = document.createElement('script');
